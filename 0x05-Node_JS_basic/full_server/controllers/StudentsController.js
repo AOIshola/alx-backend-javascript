@@ -2,7 +2,7 @@ import { readDatabase } from '../utils.js';
 
 class StudentsController {
   static async getAllStudents(req, res) {
-    const databasePath = 'database.csv';
+    const databasePath = process.argv[2];
 
     try {
       const studentData = await readDatabase(databasePath);
@@ -25,7 +25,7 @@ class StudentsController {
   }
 
   static async getAllStudentsByMajor(req, res) {
-    const databasePath = 'database.csv';
+    const databasePath = process.argv[2];
     const major = req.params.major;
 
     if (major !== 'CS' && major !== 'SWE') {
