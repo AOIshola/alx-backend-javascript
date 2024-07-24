@@ -45,7 +45,7 @@ const app = http.createServer(async (req, res) => {
     if (reqUrl.pathname === '/') {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        res.end('Hello Holberton School!\n');
+        res.end('Hello Holberton School!');
     } else if (reqUrl.pathname === '/students') {
         const databasePath = process.argv[2];
 
