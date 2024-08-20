@@ -40,7 +40,7 @@ async function countStudents(databasePath) {
     }
 }
 
-/*const app = express();
+const app = express();
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
@@ -59,39 +59,6 @@ app.get('/students', async (req, res) => {
     res.set('Content-Type', 'text/plain').status(500)
     .send(`${error.message}\n`);
   }
-});*/
-const app = http.createServer(async (req, res) => {
-    const reqUrl = url.parse(req.url, true);
-
-    if (reqUrl.pathname === '/') {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('Hello Holberton School!');
-    } else if (reqUrl.pathname === '/students') {
-        const databasePath = process.argv[2];
-
-        if (!databasePath) {
-            res.statusCode = 500;
-            res.setHeader('Content-Type', 'text/plain');
-            res.end('Database path not provided\n');
-            return;
-        }
-
-        try {
-            const studentData = await countStudents(databasePath);
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/plain');
-            res.end(`This is the list of our students\n${studentData}`);
-        } catch (error) {
-            res.statusCode = 500;
-            res.setHeader('Content-Type', 'text/plain');
-            res.end(`${error.message}\n`);
-        }
-    } else {
-        res.statusCode = 404;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('Not Found\n');
-    }
 });
 
 const PORT = 1245;
