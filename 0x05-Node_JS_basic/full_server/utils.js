@@ -28,6 +28,6 @@ export async function readDatabase(filePath) {
 
     return fieldCounts;
   } catch (error) {
-    throw new Error('Cannot load the database');
+    throw new Error(error);
   }
 }
