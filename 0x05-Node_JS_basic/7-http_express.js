@@ -40,7 +40,7 @@ async function countStudents(databasePath) {
     }
 }
 
-const app = express();
+/*const app = express();
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
@@ -59,8 +59,8 @@ app.get('/students', async (req, res) => {
     res.set('Content-Type', 'text/plain').status(500)
     .send(`${error.message}\n`);
   }
-});
-/*const app = http.createServer(async (req, res) => {
+});*/
+const app = http.createServer(async (req, res) => {
     const reqUrl = url.parse(req.url, true);
 
     if (reqUrl.pathname === '/') {
@@ -92,7 +92,7 @@ app.get('/students', async (req, res) => {
         res.setHeader('Content-Type', 'text/plain');
         res.end('Not Found\n');
     }
-});*/
+});
 
 const PORT = 1245;
 
