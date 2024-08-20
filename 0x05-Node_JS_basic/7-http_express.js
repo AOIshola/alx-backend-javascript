@@ -2,6 +2,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs').promises;
 const path = require('path');
+const express = require('express');
 
 async function countStudents(databasePath) {
     try {
@@ -39,7 +40,27 @@ async function countStudents(databasePath) {
     }
 }
 
-const app = http.createServer(async (req, res) => {
+const app = express();
+app.get('/', (req, res) => {
+  res.send('Hello Holberton School!');
+});
+
+app.get('/students', async (req, res) => {
+  let databasePath = process.argv[2];
+  if (!databasePath) {
+    databasePath = 'database.csv';
+  }
+  try {
+    const data = await countStudents(databasePath)
+    res.set('Content-Type', 'text/plain').status(200)
+    .send(`This is the list of our students\n${data}`);
+    return
+  } catch (error) {
+    res.set('Content-Type', 'text/plain').status(500)
+    .send(`${error.message}\n`);
+  }
+});
+/*const app = http.createServer(async (req, res) => {
     const reqUrl = url.parse(req.url, true);
 
     if (reqUrl.pathname === '/') {
@@ -71,7 +92,7 @@ const app = http.createServer(async (req, res) => {
         res.setHeader('Content-Type', 'text/plain');
         res.end('Not Found\n');
     }
-});
+});*/
 
 const PORT = 1245;
 
