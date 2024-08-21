@@ -8,5 +8,5 @@ process.stdin.on('data', (data) => {
 });
 
 process.on('exit', async () => {
-    process.stdout.write("This important software is now closing\r");
+    process.stdout.write("This important software is now closing\n");
 });
