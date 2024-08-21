@@ -11,20 +11,22 @@ async function countStudents(databasePath) {
     }
 
     const headers = lines[0].split(',');
-    const students = lines.slice(1).map((line) => line.split(',').map((value) => value.trim()))
-    .filter((student) => student.length === headers.length);
+    const students = lines
+      .slice(1)
+      .map((line) => line.split(',').map((value) => value.trim()))
+      .filter((student) => student.length === headers.length);
 
     const fieldCounts = {};
     const totalStudents = students.length;
 
     students.forEach((student) => {
-        const field = student[3];
-        const firstName = student[0];
+      const field = student[3];
+      const firstName = student[0];
 
-        if (!fieldCounts[field]) {
-          fieldCounts[field] = [];
-        }
-        fieldCounts[field].push(firstName);
+      if (!fieldCounts[field]) {
+        fieldCounts[field] = [];
+      }
+      fieldCounts[field].push(firstName);
     });
 
     let result = `Number of students: ${totalStudents}\n`;
@@ -39,21 +41,25 @@ async function countStudents(databasePath) {
 }
 
 const app = express();
+
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
 
 app.get('/students', async (req, res) => {
-  let databasePath = process.argv[2];
-  
+  const databasePath = process.argv[2];
+
   try {
-    const data = await countStudents(databasePath)
-    res.set('Content-Type', 'text/plain').status(200)
-    .send(`This is the list of our students\n${data}`);
-    return
+    const data = await countStudents(databasePath);
+    res
+      .set('Content-Type', 'text/plain')
+      .status(200)
+      .send(`This is the list of our students\n${data}`);
   } catch (error) {
-    res.set('Content-Type', 'text/plain').status(500)
-    .send(`This is the list of our students\n${error.message}`);
+    res
+      .set('Content-Type', 'text/plain')
+      .status(500)
+      .send(`This is the list of our students\n${error.message}`);
   }
 });
 
