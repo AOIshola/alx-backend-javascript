@@ -49,11 +49,11 @@ const app = http.createServer(async (req, res) => {
   } else if (reqUrl.pathname === '/students') {
       let databasePath = process.argv[2];
 
-      if (!databasePath) {
+/*      if (!databasePath) {
         res.statusCode = 500;
         res.setHeader('Content-Type', 'text/plain');
         res.end(`Cannot load the database`);
-      }
+      }*/
 
       try {
         const studentData = await countStudents(databasePath);
@@ -63,7 +63,7 @@ const app = http.createServer(async (req, res) => {
       } catch (error) {
           res.statusCode = 500;
           res.setHeader('Content-Type', 'text/plain');
-          res.end(`This is the list of our students\n${error.message}\n`);
+          res.end(`This is the list of our students\n${error.message}`);
       }
   } else {
       res.statusCode = 404;
