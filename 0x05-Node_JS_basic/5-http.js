@@ -12,8 +12,10 @@ async function countStudents(databasePath) {
     }
 
     const headers = lines[0].split(',');
-    const students = lines.slice(1).map((line) => line.split(',').map((value) => value.trim()))
-    .filter((student) => student.length === headers.length);
+    const students = lines
+      .slice(1)
+      .map((line) => line.split(',').map((value) => value.trim()))
+      .filter((student) => student.length === headers.length);
 
     const fieldCounts = {};
     const totalStudents = students.length;
@@ -26,7 +28,7 @@ async function countStudents(databasePath) {
         fieldCounts[field] = [];
       }
       fieldCounts[field].push(firstName);
-      });
+    });
 
     let result = `Number of students: ${totalStudents}\n`;
     for (const [field, names] of Object.entries(fieldCounts)) {
@@ -47,28 +49,22 @@ const app = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.end('Hello Holberton School!');
   } else if (reqUrl.pathname === '/students') {
-      let databasePath = process.argv[2];
+    const databasePath = process.argv[2];
 
-/*      if (!databasePath) {
-        res.statusCode = 500;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end(`Cannot load the database`);
-      }*/
-
-      try {
-        const studentData = await countStudents(databasePath);
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'text/plain');
-          res.end(`This is the list of our students\n${studentData}`);
-      } catch (error) {
-          res.statusCode = 500;
-          res.setHeader('Content-Type', 'text/plain');
-          res.end(`This is the list of our students\n${error.message}`);
-      }
-  } else {
-      res.statusCode = 404;
+    try {
+      const studentData = await countStudents(databasePath);
+      res.statusCode = 200;
       res.setHeader('Content-Type', 'text/plain');
-      res.end('Not Found');
+      res.end(`This is the list of our students\n${studentData}`);
+    } catch (error) {
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'text/plain');
+      res.end(`This is the list of our students\n${error.message}`);
+    }
+  } else {
+    res.statusCode = 404;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Not Found');
   }
 });
 
