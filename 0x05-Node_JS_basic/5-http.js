@@ -47,10 +47,12 @@ const app = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.end('Hello Holberton School!');
   } else if (reqUrl.pathname === '/students') {
-    let databasePath = process.argv[2];
+      let databasePath = process.argv[2];
 
       if (!databasePath) {
-        databasePath = 'database.csv'
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end(`Cannot load the database`);
       }
 
       try {
@@ -61,7 +63,7 @@ const app = http.createServer(async (req, res) => {
       } catch (error) {
           res.statusCode = 500;
           res.setHeader('Content-Type', 'text/plain');
-          res.end(`${error.message}\n`);
+          res.end(`This is the list of our students\n${error.message}\n`);
       }
   } else {
       res.statusCode = 404;
