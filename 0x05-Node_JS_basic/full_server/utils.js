@@ -2,7 +2,7 @@ import fs from 'fs';
 
 const { promises: fsp } = fs;
 
-export async function readDatabase(filePath) {
+export default async function readDatabase(filePath) {
   try {
     const data = await fsp.readFile(filePath, 'utf8');
     const lines = data.split('\n').filter((line) => line.trim() !== '');
